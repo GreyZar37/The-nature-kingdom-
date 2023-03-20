@@ -35,24 +35,24 @@ MonoBehaviour:
       color: {r: 0.44910192, g: 1, b: 0, a: 0.14901961}
   alternatingBackground:
     enabled: 1
-    color: {r: 0, g: 0, b: 0, a: 0.2784314}
+    color: {r: 0, g: 0, b: 0, a: 0.19215687}
   separator:
     enabled: 1
     startString: =
-    color: {r: 0.6226415, g: 0, b: 0.47366133, a: 0.20392157}
+    color: {r: 0.6226415, g: 0, b: 0.47366133, a: 0.105882354}
   tree:
     enabled: 1
     drawOverlayOnColoredPrefabs: 1
     dividerHeigth: 2
     baseLevelColor: {r: 1, g: 0, b: 0, a: 1}
     branches:
-    - overlayColor: {r: 1, g: 0, b: 0, a: 0.043137256}
+    - overlayColor: {r: 1, g: 0, b: 0, a: 0}
       colors:
       - {r: 1, g: 0.44, b: 0.97, a: 1}
       - {r: 0.56, g: 0.44, b: 1, a: 1}
       - {r: 0.44, g: 0.71, b: 1, a: 1}
       - {r: 0.19, g: 0.53, b: 0.78, a: 1}
-    - overlayColor: {r: 1, g: 0.068372086, b: 0, a: 0.043137256}
+    - overlayColor: {r: 1, g: 0.068372086, b: 0, a: 0}
       colors:
       - {r: 0.93, g: 1, b: 0.42, a: 1}
       - {r: 1, g: 0.75, b: 0.42, a: 1}
