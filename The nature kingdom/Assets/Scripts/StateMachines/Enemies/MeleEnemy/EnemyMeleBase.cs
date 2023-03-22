@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMeleBase : MonoBehaviour
+public abstract class EnemyMeleBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void onEnter(EnemyMeleManager machineScript);
+    public abstract void onUpdate(EnemyMeleManager machineScript);
+   
 }
