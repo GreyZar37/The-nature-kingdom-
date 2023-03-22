@@ -5,7 +5,7 @@ public class meleeCombatStateEnemy : EnemyMeleBase
 {
     bool attacking;
     int dodgeNum;
-    float cooldown = 1f;
+    float cooldown = 0.5f;
 
 
     float dashPower = 20;
@@ -24,27 +24,26 @@ public class meleeCombatStateEnemy : EnemyMeleBase
     {
         machineScript.anim.SetFloat("Velocity", Mathf.Abs(machineScript.rb.velocity.x));
 
+        Debug.Log(dodgeNum);
 
 
         if (isDashing)
         {
             return;
         }
-        int RNG = Random.Range(0, 6);
 
-        if (Input.GetMouseButtonDown(0) && !pressed && isDashing == false)
+        if (Input.GetMouseButtonDown(0))
         {
-            machineScript.StartCoroutine(dogeNumAdd());
-        }
-
-
-        if (isDashing == false)
-        {
-            if(dodgeNum == Random.Range(2, 4))
+            if (isDashing == false && !pressed)
+            {
+                machineScript.StartCoroutine(dogeNumAdd());
+               
+               
+            }
+            if (dodgeNum >= Random.Range(1, 7))
             {
                 machineScript.StopAllCoroutines();
                 resetStats(machineScript);
-                Debug.Log("dwad");
                 machineScript.StartCoroutine(dash(machineScript));
                 dodgeNum = 0;
             }
@@ -52,6 +51,7 @@ public class meleeCombatStateEnemy : EnemyMeleBase
         }
 
 
+        int RNG = Random.Range(0, 6);
 
 
 
