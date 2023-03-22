@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class meleeIdleStateEnemy : MonoBehaviour
+public class meleeIdleStateEnemy : EnemyMeleBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void onEnter(EnemyMeleManager machineScript)
     {
-        
+
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void onUpdate(EnemyMeleManager machineScript)
     {
-        
+
     }
 }

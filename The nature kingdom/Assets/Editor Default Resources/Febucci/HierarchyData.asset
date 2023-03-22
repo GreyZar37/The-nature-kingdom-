@@ -35,7 +35,7 @@ MonoBehaviour:
       color: {r: 0.44910192, g: 1, b: 0, a: 0.14901961}
   alternatingBackground:
     enabled: 1
-    color: {r: 0, g: 0, b: 0, a: 0.19215687}
+    color: {r: 0, g: 0, b: 0, a: 0.21176471}
   separator:
     enabled: 1
     startString: =
