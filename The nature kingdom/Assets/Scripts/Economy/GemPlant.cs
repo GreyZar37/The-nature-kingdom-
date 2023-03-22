@@ -18,7 +18,7 @@ public class GemPlant : MonoBehaviour
     [Header("Private")]
     //Dette er child objektet "GemButton"
     [SerializeField]
-    private GameObject CollectGemButton;
+    GameObject CollectGemButton;
     [SerializeField]
     TempPlayerEconomy tempPlayerEconomy;
 
