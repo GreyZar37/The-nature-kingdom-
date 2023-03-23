@@ -24,6 +24,12 @@ public class TempPlayerEconomy : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI GemCountText, DustCountText;
 
+    [Header("GemDropAmount")]
+    [SerializeField]
+    string ignore1;
+    //public så gemdropamount kan ændres imens spillet kører
+    public int Enemy1, Enemy2, Enemy3;
+
     private void Start()
     {
         GemCountText.text = Gems.ToString();
@@ -34,7 +40,8 @@ public class TempPlayerEconomy : MonoBehaviour
     private void Update()
     {
         //hvis værdien af Gems eller Dust har ændret sig, opdater hver deres UI
-        if (GemsLast != Gems) {
+        if (GemsLast != Gems)
+        {
 
             GemCountText.text = Gems.ToString();
             GemsLast = Gems;

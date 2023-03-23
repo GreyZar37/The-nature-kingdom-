@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 
 public class WaveManager : MonoBehaviour
 {
-    //todo:
-    //gør det muligt at gange enemyamount med en float og så rundt resultatet op
     [TextAreaAttribute(10, 20)]
     [SerializeField]
     string notes;
@@ -51,11 +49,11 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     int[] BaseAmount;
 
-    [Header("Scaling numbers (multiplied with wave number)")]
+    [Header("Scaling numbers (multiplied with wave number & rounded to an int)")]
     [SerializeField]
     string ignore4;
     [SerializeField]
-    int DmgScale, HPScale, EnemyAmountScale;
+    float DmgScale, HPScale, EnemyAmountScale;
 
     //den position som hver ny enemy spawner på
     Vector3 moddedSpawnPosition;
@@ -64,11 +62,11 @@ public class WaveManager : MonoBehaviour
     //den area som position skal genereres for (venstre eller højre)
     bool area;
 
+    //Gemt for loop nummer så koden kan deles op i metoder og er mere læseligt
+    int b;
+
     //alle wave scripts   
     List<Wave> wave = new List<Wave>();
-
-    //gemt spawnpos. ved ikke hvorfor instanciate ændrer på SpawnPoint transform'en?
-    Vector3 SpawnPointSave;
 
     // Start is called before the first frame update
     void Start()
@@ -76,17 +74,12 @@ public class WaveManager : MonoBehaviour
         //i tilfælde af at en gulerod har ændret på currentWave værdien i inspectioren til noget der ikke er 0
         currentWave = 0;
 
-        //sætter start spawnpoint som udgangspunkt for at spawne enemies
-        moddedSpawnPosition = new Vector3(spawnPoint.transform.position.x, 0);
-        //gemmer spawnpoint så vi er sikker på at spawnpoint x-koordinaterne ikke ændrer sig når programmet kører
-        SpawnPointSave = new Vector3(spawnPoint.transform.position.x, 0);
-
         //spawner en wave per waveAmount
         for (int i = 0; i < waveAmount; i++)
         {
             Instantiate(waveGO, CoolWaves.transform);
             wave.Add(CoolWaves.transform.GetChild(i).GetComponent<Wave>());
-            Debug.Log($"wave {i} is {wave[i]}");
+            //Debug.Log($"wave {i} is {wave[i]}");
         }
 
         //udregner alle wave numrene
@@ -105,31 +98,28 @@ public class WaveManager : MonoBehaviour
                 Debug.Log($"enemyamountscale is {EnemyAmountScale}");
                 */
 
-                wave[i].EnemyAmount[b] = (BaseAmount[b] + (i * EnemyAmountScale));
-                wave[i].EnemyDmg[b] = (BaseDamage[b] + (i * DmgScale));
-                wave[i].EnemyHP[b] = (BaseHP[b] + (i * HPScale));
+                //Den første wave er altid 0, så derfor er det ok at plusse med scale numrne her da 0 * nummer = 0, og alle waves efter den første skal have scale på
+                wave[i].EnemyAmount[b] = (BaseAmount[b] + (Mathf.RoundToInt((float)i * EnemyAmountScale)));
+                wave[i].EnemyDmg[b] = (BaseDamage[b] + (Mathf.RoundToInt((float)i * DmgScale)));
+                wave[i].EnemyHP[b] = (BaseHP[b] + (Mathf.RoundToInt((float)i * HPScale)));
             }
         }
     }
     public void SpawnNextWave()
     {
         //kun instanciate næste wave når alle enemies fra den sidste wave er døde, og der er flere waves tilbage
-        if (spawnPoint.transform.childCount == 0 && currentWave <= waveAmount)
+        if (spawnPoint.transform.childCount == 0 && currentWave < waveAmount)
         {
-            //nulstiller positionen som enemies spawner på
-            moddedSpawnPosition = new Vector3(SpawnPointSave.x, 0);
-            //Debug.Log($"moddedspawn is (before for loop) {moddedSpawnPosition}");
-
             //spawn ud fra wave nummeret
             //Skal tilføje scale numre til enemies
             if (currentWave != 0)
             {
                 //for hver enemy type
-                for (int b = 0; b < EnemyTypes.Length; b++)
+                for (b = 0; b < EnemyTypes.Length; b++)
                 {
                     //sætter numrene for enemytype b
-                    EnemyTypes[b].GetComponent<EnemyStats>().HP = (wave[currentWave].EnemyHP[b] * (HPScale * currentWave));
-                    EnemyTypes[b].GetComponent<EnemyStats>().DMG = (wave[currentWave].EnemyDmg[b] * (DmgScale * currentWave));
+                    EnemyTypes[b].GetComponent<EnemyStats>().HP = (wave[currentWave].EnemyHP[b] * (Mathf.RoundToInt((float)HPScale * currentWave)));
+                    EnemyTypes[b].GetComponent<EnemyStats>().DMG = (wave[currentWave].EnemyDmg[b] * (Mathf.RoundToInt((float)DmgScale * currentWave)));
 
                     for (int i = 0; i < (wave[currentWave].EnemyAmount[b] * (EnemyAmountScale * currentWave)); i++)
                     /*
@@ -140,70 +130,14 @@ public class WaveManager : MonoBehaviour
                     = for loop kører 3 gange
                     */
                     {
-                        //Oleg siger at position skal være mellem two minX og maxX???????????++
-
-                        //random om det er højre eller venstre area som denne enemys position ligger i
-                        area = (UnityEngine.Random.value > 0.5f);
-                        /*                        
-                        Mål: Random værdi mellem banens minimum x-koordinater og maximum x-koordinater, hvor det er usandsynligt at den samme værdi fremkommer flere gange
-
-                        random.range mellem minXPos og maxXPos + moddedSpawnPosition.x
-                        Overstående værdi bliver clamp'ed mellem minXPos og maxXpos
-                        Herefter minusses random.range mellem minXPos og maxXPos
-                        Værdien bliver igen clamp'ed mellem minXPos og maxXPos
-                        */
-
-                        if (area)
-                        {
-                            moddedSpawnPosition = new Vector3(Math.Clamp(Math.Clamp((UnityEngine.Random.Range(minXPos, maxXPos) + moddedSpawnPosition.x), minXPos, maxXPos) - UnityEngine.Random.Range(minXPos, maxXPos), minXPos, maxXPos), 0);
-
-                            //Hvis moddedSpawnPosistion har formået at være enten minXPos eller maxXPos...
-                            if (moddedSpawnPosition.x == minXPos)
-                            {
-                                moddedSpawnPosition.x += UnityEngine.Random.Range(1, -(maxXPos + 1));
-                            }
-                            else if (moddedSpawnPosition.x == maxXPos)
-                            {
-                                moddedSpawnPosition.x += UnityEngine.Random.Range(1, -(maxXPos + 1));
-                            }
-                            Debug.Log($"moddedspawnposition is {moddedSpawnPosition.x}");
-                            //Debug.Log($"moddedspawn is {moddedSpawnPosition}");
-
-                            //spawn enemy
-                            Instantiate(EnemyTypes[b], moddedSpawnPosition, Quaternion.Euler(0, 0, 0), spawnPoint.transform);
-
-                            //Omdanner transform til recttransform. Set hvis enemies bruger transform i stedet for recttransform
-                            spawnPoint.transform.GetChild(spawnPoint.transform.childCount - 1).GetComponent<RectTransform>().localPosition = moddedSpawnPosition;
-                        }
-                        else
-                        {
-                            moddedSpawnPosition2 = new Vector3(Math.Clamp(Math.Clamp((UnityEngine.Random.Range(minXPos2, maxXPos2) + moddedSpawnPosition2.x), minXPos2, maxXPos2) - UnityEngine.Random.Range(minXPos2, maxXPos2), minXPos2, maxXPos2), 0);
-
-                            //Hvis moddedSpawnPosistion2 har formået at være enten minXPos2 eller maxXPos2...
-                            if (moddedSpawnPosition2.x == minXPos2)
-                            {
-                                moddedSpawnPosition2.x -= UnityEngine.Random.Range(1, (maxXPos2 - 1));
-                            }
-                            else if (moddedSpawnPosition2.x == maxXPos2)
-                            {
-                                moddedSpawnPosition2.x -= UnityEngine.Random.Range(1, (maxXPos2 - 1));
-                            }
-                            Debug.Log($"moddedspawnposition2 is {moddedSpawnPosition2.x}");
-                            //Debug.Log($"moddedspawn is {moddedSpawnPosition}");
-
-                            //spawn enemy
-                            Instantiate(EnemyTypes[b], moddedSpawnPosition2, Quaternion.Euler(0, 0, 0), spawnPoint.transform);
-
-                            //Omdanner transform til recttransform. Set hvis enemies bruger transform i stedet for recttransform
-                            spawnPoint.transform.GetChild(spawnPoint.transform.childCount - 1).GetComponent<RectTransform>().localPosition = moddedSpawnPosition2;
-                        }
+                        spawnAtRandomPos();
                     }
                 }
             }
             //Skal ikke tilføje scale numre til enemies
             else
             { //for hver enemy type
-                for (int b = 0; b < EnemyTypes.Length; b++)
+                for (b = 0; b < EnemyTypes.Length; b++)
                 {
                     //sætter numrene for enemytype b
                     EnemyTypes[b].GetComponent<EnemyStats>().HP = wave[currentWave].EnemyHP[b];
@@ -218,66 +152,44 @@ public class WaveManager : MonoBehaviour
                     = for loop kører 3 gange
                     */
                     {
-                        //random om det er højre eller venstre area som denne enemys position ligger i
-                        area = (UnityEngine.Random.value > 0.5f);
-                        /*                        
-                        Mål: Random værdi mellem banens minimum x-koordinater og maximum x-koordinater, hvor det er usandsynligt at den samme værdi fremkommer flere gange
-
-                        random.range mellem minXPos og maxXPos + moddedSpawnPosition.x
-                        Overstående værdi bliver clamp'ed mellem minXPos og maxXpos
-                        Herefter minusses random.range mellem minXPos og maxXPos
-                        Værdien bliver igen clamp'ed mellem minXPos og maxXPos
-                        */
-
-                        if (area)
-                        {
-                            moddedSpawnPosition = new Vector3(Math.Clamp(Math.Clamp((UnityEngine.Random.Range(minXPos, maxXPos) + moddedSpawnPosition.x), minXPos, maxXPos) - UnityEngine.Random.Range(minXPos, maxXPos), minXPos, maxXPos), 0);
-
-                            //Hvis moddedSpawnPosistion har formået at være enten minXPos eller maxXPos...
-                            if (moddedSpawnPosition.x == minXPos)
-                            {
-                                moddedSpawnPosition.x += UnityEngine.Random.Range(1, -(maxXPos + 1));
-                            }
-                            else if (moddedSpawnPosition.x == maxXPos)
-                            {
-                                moddedSpawnPosition.x += UnityEngine.Random.Range(1, -(maxXPos + 1));
-                            }
-                            Debug.Log($"moddedspawnposition is {moddedSpawnPosition.x}");
-                            //Debug.Log($"moddedspawn is {moddedSpawnPosition}");
-
-                            //spawn enemy
-                            Instantiate(EnemyTypes[b], moddedSpawnPosition, Quaternion.Euler(0, 0, 0), spawnPoint.transform);
-
-                            //Omdanner transform til recttransform. Set hvis enemies bruger transform i stedet for recttransform
-                            spawnPoint.transform.GetChild(spawnPoint.transform.childCount - 1).GetComponent<RectTransform>().localPosition = moddedSpawnPosition;
-                        }
-                        else
-                        {
-                            moddedSpawnPosition2 = new Vector3(Math.Clamp(Math.Clamp((UnityEngine.Random.Range(minXPos2, maxXPos2) + moddedSpawnPosition2.x), minXPos2, maxXPos2) - UnityEngine.Random.Range(minXPos2, maxXPos2), minXPos2, maxXPos2), 0);
-
-                            //Hvis moddedSpawnPosistion2 har formået at være enten minXPos2 eller maxXPos2...
-                            if (moddedSpawnPosition2.x == minXPos2)
-                            {
-                                moddedSpawnPosition2.x -= UnityEngine.Random.Range(1, (maxXPos2 - 1));
-                            }
-                            else if (moddedSpawnPosition2.x == maxXPos2)
-                            {
-                                moddedSpawnPosition2.x -= UnityEngine.Random.Range(1, (maxXPos2 - 1));
-                            }
-                            Debug.Log($"moddedspawnposition2 is {moddedSpawnPosition2.x}");
-                            //Debug.Log($"moddedspawn is {moddedSpawnPosition}");
-
-                            //spawn enemy
-                            Instantiate(EnemyTypes[b], moddedSpawnPosition2, Quaternion.Euler(0, 0, 0), spawnPoint.transform);
-
-                            //Omdanner transform til recttransform. Set hvis enemies bruger transform i stedet for recttransform
-                            spawnPoint.transform.GetChild(spawnPoint.transform.childCount - 1).GetComponent<RectTransform>().localPosition = moddedSpawnPosition2;
-                        }
+                        spawnAtRandomPos();
                     }
                 }
-                //klar til næste wave
-                currentWave += 1;
             }
+            //klar til næste wave
+            currentWave += 1;
+        }
+    }
+    private void spawnAtRandomPos()
+    {
+        //random om det er højre eller venstre area som denne enemys position ligger i
+        area = (UnityEngine.Random.value > 0.5f);
+
+        if (area)
+        {
+            //Random position
+            moddedSpawnPosition = new Vector3(UnityEngine.Random.Range(minXPos, maxXPos), 0);
+
+            //Debug.Log($"moddedspawnposition is {moddedSpawnPosition.x}");
+
+            //Instanciater denne enemy type på moddedSpawnPosition 
+            Instantiate(EnemyTypes[b], moddedSpawnPosition, Quaternion.Euler(0, 0, 0), spawnPoint.transform);
+
+            //Omdanner transform til recttransform. Set hvis enemies bruger transform i stedet for recttransform
+            spawnPoint.transform.GetChild(spawnPoint.transform.childCount - 1).GetComponent<RectTransform>().localPosition = moddedSpawnPosition;
+        }
+        else
+        {
+            //Random position
+            moddedSpawnPosition2 = new Vector3(UnityEngine.Random.Range(minXPos2, maxXPos2), 0);
+
+            //Debug.Log($"moddedspawnposition2 is {moddedSpawnPosition2.x}");
+
+            //Instanciater denne enemy type på moddedSpawnPosition 
+            Instantiate(EnemyTypes[b], moddedSpawnPosition2, Quaternion.Euler(0, 0, 0), spawnPoint.transform);
+
+            //Omdanner transform til recttransform. Set hvis enemies bruger transform i stedet for recttransform
+            spawnPoint.transform.GetChild(spawnPoint.transform.childCount - 1).GetComponent<RectTransform>().localPosition = moddedSpawnPosition2;
         }
     }
 }
