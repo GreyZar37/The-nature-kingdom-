@@ -9,7 +9,8 @@ public class EnemyStats : MonoBehaviour
 
     public void Die()
     {
-        Destroy(this);
+        //Debug.Log($"this square {this.gameObject} should die");
+        Destroy(this.gameObject);
     }
 }
 
