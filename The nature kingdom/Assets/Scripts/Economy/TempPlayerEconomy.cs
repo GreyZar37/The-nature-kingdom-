@@ -29,6 +29,8 @@ public class TempPlayerEconomy : MonoBehaviour
     string ignore1;
     //public så gemdropamount kan ændres imens spillet kører
     public int Enemy1, Enemy2, Enemy3;
+    //samme overordnet int, men for planter. Husk at kalde GemPlantSystem.addNewGemPlantSpots(); når PlantGrowAmoun ændres
+    public int PlantGrowAmount, WildPlantGrowAmount;
 
     private void Start()
     {
