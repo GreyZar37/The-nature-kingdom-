@@ -24,13 +24,19 @@ public class GemPlantSystem : MonoBehaviour
             gemPlants.Add(this.transform.GetChild(i).GetComponent<GemPlant>());
             gemPlants[i].GemGrowAmount = tempPlayerEconomy.PlantGrowAmount;
             gemPlants[i].isPlantSpot = true;
+            gemPlants[i].setup();
         }
+        Debug.Log($"{gemPlants[2]}");
+        Debug.Log($"{gemPlants.Count}");
     }
 
     public void buyGemPlant()
     {
         if (tempPlayerEconomy.Dust >= plantCost)
         {
+            Debug.Log($"{gemPlants[2]}");
+            Debug.Log($"{gemPlants.Count}");
+            Debug.Log($"{gemPlantsBought}");
             //Spilleren har nok Dust til at købe en plante
             if (gemPlants.Count > gemPlantsBought)
             {

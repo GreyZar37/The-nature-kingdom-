@@ -36,7 +36,7 @@ public class GemPlant : MonoBehaviour
     {
         GrowTimer = GrowTimerNum;
         setup();
-    }
+    }    
 
     // Update is called once per frame
     void Update()
