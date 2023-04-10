@@ -71,10 +71,11 @@ public class GemPlantSystem : MonoBehaviour
         //Kald denne method hvis nye GemPlant gameobjekter bliver instanciate'd under spillet eller PlantGrowAmount ændres
         //Nye GemPlant gameobjekter *skal* have dette objekt som parent
 
+        //Nulstil listen
+        gemPlants.Clear();
+
         for (int i = 0; i < this.transform.childCount; i++)
-        {
-            //Nulstil listen
-            gemPlants.Clear();
+        {            
             //Tilføj alle GemPlant
             gemPlants.Add(this.transform.GetChild(i).GetComponent<GemPlant>());
             gemPlants[i].GemGrowAmount = tempPlayerEconomy.PlantGrowAmount;
