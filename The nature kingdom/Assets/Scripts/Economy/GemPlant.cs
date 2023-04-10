@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class GemPlant : MonoBehaviour
@@ -26,14 +27,16 @@ public class GemPlant : MonoBehaviour
     float GrowTimer;
     //Om planten er igang med at gro Gems eller ej
     bool IsGrowingGems = true;
+    //om planten er et plantspot (inden i basen) eller en plante uden for basen
+    public bool isPlantSpot;
 
 
     // Start is called before the first frame update
     void Start()
     {
         GrowTimer = GrowTimerNum;
-        CollectGemButton.SetActive(false);
-    }
+        setup();
+    }    
 
     // Update is called once per frame
     void Update()
@@ -60,6 +63,27 @@ public class GemPlant : MonoBehaviour
         IsGrowingGems = true;
 
         //GIV SPILLER GemGrowAmount ANTAL GEMS HER
-        tempPlayerEconomy.Gems += GemGrowAmount;
+        //evt. gør dette til et unity event og fjern tempplayereconomy reference
+        if (isPlantSpot)
+        {
+            tempPlayerEconomy.Gems += GemGrowAmount;
+        }
+        else
+        {
+            tempPlayerEconomy.Gems += tempPlayerEconomy.WildPlantGrowAmount;
+        }
+    }
+    public void setup()
+    {
+        //denne method gør planten klar til start
+        if (isPlantSpot)
+        {
+            CollectGemButton.SetActive(false);
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            CollectGemButton.SetActive(false);
+        }
     }
 }
