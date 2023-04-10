@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerBase
+  - Enemy
+  - Ally
+  - GuardPoint
+  - FxTemporaire
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -13,8 +18,8 @@ TagManager:
   - Water
   - UI
   - Mobs
-  - 
-  - 
+  - Enemy
+  - Bullets
   - 
   - 
   - 

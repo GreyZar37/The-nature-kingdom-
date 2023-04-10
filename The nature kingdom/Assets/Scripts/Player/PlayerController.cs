@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     [Header("Components")]
     Rigidbody2D rb;
     Animator anim;
-    bool attacking;
 
     float playerSpriteScale;
 
@@ -55,18 +54,8 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Velocity", Mathf.Abs(rb.velocity.x));
 
 
-        if (Input.GetMouseButtonDown(0) && !attacking)
-        {
-            StartCoroutine(attack());
-        }
+       
     }
 
-    IEnumerator attack()
-    {
-        attacking = true;
-        anim.SetBool("Attacking", true);
-        yield return new WaitForSeconds(.5f);
-        anim.SetBool("Attacking", false);
-        attacking = false;
-    }
+ 
 }

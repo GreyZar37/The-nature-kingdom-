@@ -38,7 +38,7 @@ public class meleeFolowStateEnemy : EnemyMeleBase
 
 
         }
-         
+
 
         if (machineScript.DistanceToTarget <= machineScript.attackDistance)
         {

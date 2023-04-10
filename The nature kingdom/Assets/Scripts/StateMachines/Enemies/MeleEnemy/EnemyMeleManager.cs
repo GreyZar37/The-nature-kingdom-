@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMeleManager : Enemy
@@ -21,6 +20,7 @@ public class EnemyMeleManager : Enemy
     // Update is called once per frame
     public override void Update()
     {
+
         base.Update();
         currentState.onUpdate(this);
     }
@@ -29,7 +29,18 @@ public class EnemyMeleManager : Enemy
 
     public override void takeDamage(int damage)
     {
-        base.takeDamage(damage);
+        if (!isDashing && !block)
+        {
+            base.takeDamage(damage);
+            if (!stuned)
+            {
+                StartCoroutine(stun());
+            }
+        }
+
+           
+
+      
     }
 
     public void SwitchState(EnemyMeleBase state)
@@ -49,4 +60,20 @@ public class EnemyMeleManager : Enemy
             gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
+
+    IEnumerator stun()
+    {
+        stuned = true;
+
+
+        yield return new WaitForSeconds(stunedTimer);
+
+
+
+        stuned = false;
+
+    }
+
+   
+
 }

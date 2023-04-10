@@ -25,6 +25,12 @@ public abstract class Enemy : MonoBehaviour
     public float blockCooldown;
     public float blockTime;
     public bool block;
+    public bool isDashing;
+
+
+    public bool stuned;
+    public float stunedTimer;
+
 
     [Header("Components")]
     public GameObject currentFollowObj;
@@ -32,10 +38,17 @@ public abstract class Enemy : MonoBehaviour
     public GameObject Player;
     public Rigidbody2D rb;
     public Animator anim;
-
+    public Transform attackPos;
     [Header("Other")]
     public float DistanceToTarget;
     public LayerMask mobs;
+
+    public AudioClip[] hurtSounds;
+    public AudioClip[] hurtSoundsStab;
+
+    public AudioClip[] attackSounds;
+
+
     private void Awake()
     {
     }
@@ -51,32 +64,40 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Update()
     {
-        DistanceToTarget= Vector2.Distance(transform.position, currentFollowObj.transform.position);
+        if (currentFollowObj == null)
+        {
+            currentFollowObj = PlayerBase;
+        }
+        DistanceToTarget = Vector2.Distance(transform.position, currentFollowObj.transform.position);
     }
 
 
 
     public virtual void takeDamage(int damage)
     {
-        Health -= damage;
+        AudioManager.PlaySound(hurtSounds, 1);
+        AudioManager.PlaySound(hurtSoundsStab, 1);
 
+        Health -= damage;
         if (Health <= 0)
         {
             die();
         }
+        anim.SetTrigger("Hit");
     }
     public void die()
     {
-        Destroy(gameObject);
+
+        anim.SetTrigger("Die");
+        Destroy(this);
+
+        gameObject.AddComponent<DestroyObject>();
+        Destroy(gameObject.GetComponent<Collider2D>());
+        Destroy(gameObject.GetComponent<Rigidbody2D>());
+
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, sight);
-
-        Gizmos.DrawWireSphere(transform.position, sight / 2);
-
-    }
+   
 
 
 }
