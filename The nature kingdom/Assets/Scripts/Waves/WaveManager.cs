@@ -93,7 +93,7 @@ public class WaveManager : MonoBehaviour
                     enemyTypes[i].GetComponent<EnemyStats>().HP = wave[currentWave].EnemyHP[i];
                     enemyTypes[i].GetComponent<EnemyStats>().DMG = wave[currentWave].EnemyDmg[i];
 
-                    for (int j = 0; j < wave[currentWave].EnemyAmount[j]; j++)
+                    for (int j = 0; j < wave[currentWave].EnemyAmount[i]; j++)
                     /*
                     for værdien af EnemyAmount instantiate den enemy type.
                     Eks:
