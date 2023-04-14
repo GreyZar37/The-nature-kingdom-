@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class buyATower : MonoBehaviour
 {
-    [TextAreaAttribute(10, 20)]
-    [SerializeField]
-    string notes;
+    [TextAreaAttribute(10, 20)][SerializeField] string notes;
 
     public int towerCost; //Gems
     int towersBought; //nummer af towers spilleren har købt indtil videre
