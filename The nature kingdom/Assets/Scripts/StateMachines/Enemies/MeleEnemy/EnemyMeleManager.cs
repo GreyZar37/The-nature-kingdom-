@@ -8,25 +8,18 @@ public class EnemyMeleManager : Enemy
     public meleeIdleStateEnemy idleState = new meleeIdleStateEnemy();
 
     EnemyMeleBase currentState;
-
     public override void Start()
     {
         base.Start();
-
         currentState = followState;
         currentState.onEnter(this);
     }
-
     // Update is called once per frame
     public override void Update()
     {
-
         base.Update();
         currentState.onUpdate(this);
     }
-
-
-
     public override void takeDamage(int damage)
     {
         if (!isDashing && !block)
@@ -38,11 +31,7 @@ public class EnemyMeleManager : Enemy
             }
         }
 
-           
-
-      
     }
-
     public void SwitchState(EnemyMeleBase state)
     {
         currentState = state;
@@ -64,16 +53,7 @@ public class EnemyMeleManager : Enemy
     IEnumerator stun()
     {
         stuned = true;
-
-
         yield return new WaitForSeconds(stunedTimer);
-
-
-
         stuned = false;
-
     }
-
-   
-
 }

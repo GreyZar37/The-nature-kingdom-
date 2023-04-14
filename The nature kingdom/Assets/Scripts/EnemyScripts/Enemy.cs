@@ -11,26 +11,27 @@ public abstract class Enemy : MonoBehaviour
             return (int)Mathf.Sign(currentFollowObj.transform.position.x - transform.position.x);
         }
     }
-
+    
     [TextArea]
     public string note;
 
     [Header("Properties")]
     public float speed;
-    public int damage;
-    public int Health;
-    public float attackDistance;
-    public int sight;
     public float attakcCooldown;
     public float blockCooldown;
     public float blockTime;
+
+    public int damage;
+    public int Health;
+    public int sight;
+
+    public float attackDistance;
+   
     public bool block;
     public bool isDashing;
 
-
     public bool stuned;
     public float stunedTimer;
-
 
     [Header("Components")]
     public GameObject currentFollowObj;
@@ -45,13 +46,8 @@ public abstract class Enemy : MonoBehaviour
 
     public AudioClip[] hurtSounds;
     public AudioClip[] hurtSoundsStab;
-
     public AudioClip[] attackSounds;
 
-
-    private void Awake()
-    {
-    }
     public virtual void Start()
     {
         anim = GetComponent<Animator>();
@@ -59,9 +55,7 @@ public abstract class Enemy : MonoBehaviour
         PlayerBase = GameObject.FindGameObjectWithTag("PlayerBase");
         rb = GetComponent<Rigidbody2D>();
         currentFollowObj = PlayerBase;
-
     }
-
     public virtual void Update()
     {
         if (currentFollowObj == null)
@@ -70,8 +64,6 @@ public abstract class Enemy : MonoBehaviour
         }
         DistanceToTarget = Vector2.Distance(transform.position, currentFollowObj.transform.position);
     }
-
-
 
     public virtual void takeDamage(int damage)
     {
@@ -96,8 +88,4 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject.GetComponent<Rigidbody2D>());
 
     }
-
-   
-
-
 }
