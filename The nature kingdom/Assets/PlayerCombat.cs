@@ -79,7 +79,7 @@ public class PlayerCombat : MonoBehaviour
         StopCoroutine(attackRoutine);
         StartCoroutine(stun());
 
-        if(currentHealth <= 20)
+        if(currentHealth <= 0)
         {
             SceneManager.LoadScene(0);
         }
