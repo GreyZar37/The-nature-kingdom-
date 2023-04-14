@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerCombat : MonoBehaviour
 {
     Animator anim;
@@ -78,6 +78,11 @@ public class PlayerCombat : MonoBehaviour
         if(attackRoutine != null)
         StopCoroutine(attackRoutine);
         StartCoroutine(stun());
+
+        if(currentHealth <= 20)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     private void OnDrawGizmos()

@@ -109,7 +109,11 @@ public class meleeCombatStateEnemy : EnemyMeleBase
                 currentEnemy = hit.gameObject;
                 currentEnemy.GetComponent<AllyMeleManager>().takeDamage(machineScript.damage);
             }
-
+            else if (hit.transform.tag == "PlayerBase")
+            {
+                currentEnemy = hit.gameObject;
+                currentEnemy.GetComponent<Basehealth>().takeDamage(machineScript.damage);
+            }
 
         }
         if (currentEnemy != null)
