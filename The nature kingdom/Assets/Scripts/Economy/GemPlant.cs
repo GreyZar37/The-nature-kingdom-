@@ -6,9 +6,7 @@ using UnityEngine;
 
 public class GemPlant : MonoBehaviour
 {
-    [TextArea]
-    [SerializeField]
-    string notes;
+    [TextArea][SerializeField] string notes;
 
     [Header("Public")]
     //Hvor mange gems planten gror. Public så amount kan gøres større af andre scripts
@@ -18,10 +16,8 @@ public class GemPlant : MonoBehaviour
 
     [Header("Private")]
     //Dette er child objektet "GemButton"
-    [SerializeField]
-    GameObject CollectGemButton;
-    [SerializeField]
-    TempPlayerEconomy tempPlayerEconomy;
+    [SerializeField] GameObject CollectGemButton;
+    [SerializeField] TempPlayerEconomy tempPlayerEconomy;
 
     //Det variabel som tæller ned (Time.Deltatime bliver minusset fra dette variabel)
     float GrowTimer;
@@ -36,7 +32,7 @@ public class GemPlant : MonoBehaviour
     {
         GrowTimer = GrowTimerNum;
         setup();
-    }    
+    }
 
     // Update is called once per frame
     void Update()
@@ -62,8 +58,6 @@ public class GemPlant : MonoBehaviour
         //Plante kan nu gro nye Gems
         IsGrowingGems = true;
 
-        //GIV SPILLER GemGrowAmount ANTAL GEMS HER
-        //evt. gør dette til et unity event og fjern tempplayereconomy reference
         if (isPlantSpot)
         {
             tempPlayerEconomy.Gems += GemGrowAmount;
@@ -84,6 +78,7 @@ public class GemPlant : MonoBehaviour
         else
         {
             CollectGemButton.SetActive(false);
-        }
+        }        
+        tempPlayerEconomy = FindObjectOfType<TempPlayerEconomy>();
     }
 }

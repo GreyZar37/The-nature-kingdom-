@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class GemPlantSystem : MonoBehaviour
 {
-    List<GemPlant> gemPlants = new List<GemPlant>();
-
     int gemPlantsBought = 0;
-    private int plantNum;
-    [SerializeField]
-    TempPlayerEconomy tempPlayerEconomy;
-    [SerializeField]
-    makeCurrencyErrorText makeCurrencyErrorText;
+    [SerializeField] TempPlayerEconomy tempPlayerEconomy;
+    [SerializeField] makeCurrencyErrorText makeCurrencyErrorText;
+    [SerializeField] GameObject gemPlantPrefab; //Prefab til gemplant
+    List<Transform> PlantSpots = new List<Transform>();
 
     //hvor meget Dust det koster at købe en plante
     public int plantCost;
@@ -21,32 +18,24 @@ public class GemPlantSystem : MonoBehaviour
     {
         for (int i = 0; i < this.transform.childCount; i++)
         {
-            gemPlants.Add(this.transform.GetChild(i).GetComponent<GemPlant>());
-            gemPlants[i].GemGrowAmount = tempPlayerEconomy.PlantGrowAmount;
-            gemPlants[i].isPlantSpot = true;
-            gemPlants[i].setup();
+            PlantSpots.Add(this.transform.GetChild(i).transform);
         }
-        Debug.Log($"{gemPlants[2]}");
-        Debug.Log($"{gemPlants.Count}");
     }
 
     public void buyGemPlant()
     {
         if (tempPlayerEconomy.Dust >= plantCost)
         {
-            Debug.Log($"{gemPlants[2]}");
-            Debug.Log($"{gemPlants.Count}");
-            Debug.Log($"{gemPlantsBought}");
             //Spilleren har nok Dust til at købe en plante
-            if (gemPlants.Count > gemPlantsBought)
+            if (PlantSpots.Count > gemPlantsBought)
             {
-                gemPlants[gemPlantsBought].gameObject.SetActive(true);
+                Instantiate(gemPlantPrefab, PlantSpots[gemPlantsBought]);
                 gemPlantsBought += 1;
 
                 //Spilleren har købt en plante for plantCost antal Dust
-                tempPlayerEconomy.Dust -= plantCost;                
+                tempPlayerEconomy.Dust -= plantCost;
             }
-            else if (gemPlants.Count == gemPlantsBought)
+            else if (PlantSpots.Count == gemPlantsBought)
             {
                 //Alle plant spots are fyldt op
                 makeCurrencyErrorText.addonText = "plant spots";
@@ -68,18 +57,14 @@ public class GemPlantSystem : MonoBehaviour
     }
     public void addNewGemPlantSpots()
     {
-        //Kald denne method hvis nye GemPlant gameobjekter bliver instanciate'd under spillet eller PlantGrowAmount ændres
-        //Nye GemPlant gameobjekter *skal* have dette objekt som parent
+        //Kald denne metode hvis nye gemplant spots bliver tilføjet under spillet
 
-        //Nulstil listen
-        gemPlants.Clear();
+        //nulstil listen
+        PlantSpots.Clear();
 
         for (int i = 0; i < this.transform.childCount; i++)
-        {            
-            //Tilføj alle GemPlant
-            gemPlants.Add(this.transform.GetChild(i).GetComponent<GemPlant>());
-            gemPlants[i].GemGrowAmount = tempPlayerEconomy.PlantGrowAmount;
-            gemPlants[i].isPlantSpot = true;
+        {
+            PlantSpots.Add(this.transform.GetChild(i).transform);
         }
     }
 }
