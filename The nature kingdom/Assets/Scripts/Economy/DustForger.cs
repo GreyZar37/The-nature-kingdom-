@@ -1,16 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DustForger : MonoBehaviour
 {
-    [TextArea]
-    [SerializeField]
-    string notes;
+    [TextArea][SerializeField] string notes;
 
     //hvor mange Gems det koster at forge dust
     public int dustCost;
@@ -18,16 +13,14 @@ public class DustForger : MonoBehaviour
     //hvor meget dust spilleren får
     public int dustAmount;
 
-    [Header("Components")]
-    [SerializeField]
-    TempPlayerEconomy tempPlayerEconomy;
-    //GO = GameObject
-    [SerializeField]
-    GameObject CollectDustButton;
-    [SerializeField]
-    MakeCurrencyErrorText makeCurrencyErrorText;
+    //om der er dust tilgængeligt for spilleren at samle op
+    bool dustAvailable = false; 
 
-    bool dustAvailable = false; //om der er dust tilgængeligt for spilleren at samle op
+    [Header("Components")]
+    [SerializeField] TempPlayerEconomy tempPlayerEconomy;
+    [SerializeField] GameObject CollectDustButton;
+    [SerializeField] MakeCurrencyErrorText makeCurrencyErrorText;
+
 
     // Start is called before the first frame update
     void Start()
