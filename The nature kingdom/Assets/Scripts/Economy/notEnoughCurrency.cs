@@ -4,33 +4,30 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class notEnoughCurrency : MonoBehaviour
+public class NotEnoughCurrency : MonoBehaviour
 {
     string ErrorTextBase = "Not enough";
     public string ErrorTextAddon;
 
-    TextMeshProUGUI notEnoughTxt;
+    [SerializeField] TextMeshProUGUI notEnoughTxt;
+    [SerializeField] RectTransform rect;
 
-    public Vector3 thisCoolPos;
-
-    RectTransform rect;
+    public Vector3 thisCoolPos;    
 
     // Start is called before the first frame update
     void Start()
     {
-        notEnoughTxt = this.GetComponent<TextMeshProUGUI>();
-        rect = this.GetComponent<RectTransform>();
         notEnoughTxt.enabled = false;
     }
     public void MakeMessage()
     {        
         //animér tekst der siger 'not enough gems!'
         float timer = 0.4f;
-        StartCoroutine(notEnoughGemsAni(timer));
+        StartCoroutine(NotEnoughGemsAni(timer));
     }
 
     //man kan gøre det her på mange andre måder men nu havde jeg lige lyst til at bruge IEnumerator
-    private IEnumerator notEnoughGemsAni(float timer)
+    private IEnumerator NotEnoughGemsAni(float timer)
     {
         //skal vente på næste update()
         yield return null;
@@ -39,7 +36,6 @@ public class notEnoughCurrency : MonoBehaviour
         notEnoughTxt.enabled = true;
 
         rect.localPosition = thisCoolPos;
-        //Debug.Log($"{rect.localPosition}");
 
         notEnoughTxt.text = ErrorTextBase + ErrorTextAddon;
 
@@ -47,7 +43,6 @@ public class notEnoughCurrency : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             rect.localPosition += new Vector3(0f, 7f);
-            //Debug.Log($"modded {rect.localPosition}");
             yield return new WaitForSeconds(timer);
         }
         Destroy(this.gameObject);

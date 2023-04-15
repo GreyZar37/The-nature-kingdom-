@@ -6,7 +6,7 @@ public class GemPlantSystem : MonoBehaviour
 {
     int gemPlantsBought = 0;
     [SerializeField] TempPlayerEconomy tempPlayerEconomy;
-    [SerializeField] makeCurrencyErrorText makeCurrencyErrorText;
+    [SerializeField] MakeCurrencyErrorText makeCurrencyErrorText;
     [SerializeField] GameObject gemPlantPrefab; //Prefab til gemplant
     List<Transform> PlantSpots = new List<Transform>();
 
@@ -40,7 +40,7 @@ public class GemPlantSystem : MonoBehaviour
                 //Alle plant spots are fyldt op
                 makeCurrencyErrorText.addonText = "plant spots";
                 makeCurrencyErrorText.messagePos = this.transform.position;
-                makeCurrencyErrorText.newMessage();
+                makeCurrencyErrorText.NewMessage();
             }
             else
             {
@@ -52,7 +52,7 @@ public class GemPlantSystem : MonoBehaviour
             //Spilleren har ikke nok Dust til at købe en plante
             makeCurrencyErrorText.addonText = "Dust";
             makeCurrencyErrorText.messagePos = this.transform.position;
-            makeCurrencyErrorText.newMessage();
+            makeCurrencyErrorText.NewMessage();
         }
     }
     public void addNewGemPlantSpots()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class buyATower : MonoBehaviour
+public class BuyATower : MonoBehaviour
 {
     [TextAreaAttribute(10, 20)][SerializeField] string notes;
 
@@ -10,8 +10,8 @@ public class buyATower : MonoBehaviour
     int towersBought; //nummer af towers spilleren har købt indtil videre
     [SerializeField] GameObject TowerPrefab; //Prefab til et Tower
     [SerializeField] TempPlayerEconomy tempPlayerEconomy;
-    [SerializeField] makeCurrencyErrorText makeCurrencyErrorText;
-    List<Transform> towerSpots = new List<Transform>();
+    [SerializeField] MakeCurrencyErrorText makeCurrencyErrorText;
+    List<Transform> towerSpots = new();
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class buyATower : MonoBehaviour
             towerSpots.Add(this.transform.GetChild(i).transform);
         }
     }
-    public void buyTower()
+    public void BuyTower()
     {
         if (tempPlayerEconomy.Gems >= towerCost)
         {
@@ -39,7 +39,7 @@ public class buyATower : MonoBehaviour
                 //Alle tower spots er fyldt op
                 makeCurrencyErrorText.addonText = "tower spots";
                 makeCurrencyErrorText.messagePos = this.transform.position;
-                makeCurrencyErrorText.newMessage();
+                makeCurrencyErrorText.NewMessage();
             }
             else
             {
@@ -51,10 +51,10 @@ public class buyATower : MonoBehaviour
             //Spilleren har ikke nok Gems til at købe et tower
             makeCurrencyErrorText.addonText = "Gems";
             makeCurrencyErrorText.messagePos = this.transform.position;
-            makeCurrencyErrorText.newMessage();
+            makeCurrencyErrorText.NewMessage();
         }
     }
-    public void addNewTowerSpots()
+    public void AddNewTowerSpots()
     {
         //Kald denne metode hvis nye Tower spots bliver tilføjet under spillet
 

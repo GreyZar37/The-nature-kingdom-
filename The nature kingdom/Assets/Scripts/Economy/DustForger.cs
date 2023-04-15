@@ -25,7 +25,7 @@ public class DustForger : MonoBehaviour
     [SerializeField]
     GameObject CollectDustButton;
     [SerializeField]
-    makeCurrencyErrorText makeCurrencyErrorText;
+    MakeCurrencyErrorText makeCurrencyErrorText;
 
     bool dustAvailable = false; //om der er dust tilgængeligt for spilleren at samle op
 
@@ -45,7 +45,7 @@ public class DustForger : MonoBehaviour
         {
             makeCurrencyErrorText.addonText = "Gems";
             makeCurrencyErrorText.messagePos = this.transform.position;
-            makeCurrencyErrorText.newMessage();
+            makeCurrencyErrorText.NewMessage();
         }
     }
     public void CollectDust()

@@ -26,18 +26,19 @@ public class GemPlant : MonoBehaviour
     //om planten er et plantspot (inden i basen) eller en plante uden for basen
     public bool isPlantSpot;
 
-
     // Start is called before the first frame update
     void Start()
     {
         GrowTimer = GrowTimerNum;
-        setup();
+        CollectGemButton.SetActive(false);
+        tempPlayerEconomy = FindObjectOfType<TempPlayerEconomy>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //man kan også bruge ienumerator, men det er for nørder :)))
+        //Timer der sørger for at der gå GrowTimerNum sekunder før næste Gems kan opsamles af spilleren
+        //Man kan også bruge ienumerator her
         if (IsGrowingGems)
         {
             GrowTimer -= Time.deltaTime;
@@ -66,19 +67,5 @@ public class GemPlant : MonoBehaviour
         {
             tempPlayerEconomy.Gems += tempPlayerEconomy.WildPlantGrowAmount;
         }
-    }
-    public void setup()
-    {
-        //denne method gør planten klar til start
-        if (isPlantSpot)
-        {
-            CollectGemButton.SetActive(false);
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            CollectGemButton.SetActive(false);
-        }        
-        tempPlayerEconomy = FindObjectOfType<TempPlayerEconomy>();
     }
 }

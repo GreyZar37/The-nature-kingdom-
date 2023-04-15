@@ -85,7 +85,7 @@ public class WaveManager : MonoBehaviour
             //for hver enemy type
             for (int i = 0; i < enemies.Length; i++)
             {
-                //sætter numrene for enemytype b
+                //sætter numrene for enemytype i
                 enemies[i].baseHP = waves[currentWave].EnemyHP[i];
                 enemies[i].baseDamage = waves[currentWave].EnemyDmg[i];
                 enemies[i].baseGems = waves[currentWave].EnemyGems[i];
@@ -94,7 +94,7 @@ public class WaveManager : MonoBehaviour
                 /*
                 For værdien af EnemyAmount instantiate den enemy type.
                 Eks:
-                EnemyTypes b = 2,
+                Enemies i = 2,
                 enemy 2s EnemyAmount = 3,
                 = for loop kører 3 gange
                 */
