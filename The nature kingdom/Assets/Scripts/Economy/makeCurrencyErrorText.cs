@@ -6,8 +6,7 @@ using UnityEngine;
 public class MakeCurrencyErrorText : MonoBehaviour
 {
     [SerializeField] GameObject ObjectTemplate;
-
-    NotEnoughCurrency notEnoughCurrency;
+    [SerializeField] NotEnoughCurrency notEnoughCurrency;
 
     public Vector3 messagePos;
     public string addonText;

@@ -8,7 +8,7 @@ public class GemPlantSystem : MonoBehaviour
     [SerializeField] TempPlayerEconomy tempPlayerEconomy;
     [SerializeField] MakeCurrencyErrorText makeCurrencyErrorText;
     [SerializeField] GameObject gemPlantPrefab; //Prefab til gemplant
-    List<Transform> PlantSpots = new List<Transform>();
+    List<Transform> PlantSpots = new();
 
     //hvor meget Dust det koster at købe en plante
     public int plantCost;
@@ -22,7 +22,7 @@ public class GemPlantSystem : MonoBehaviour
         }
     }
 
-    public void buyGemPlant()
+    public void BuyGemPlant()
     {
         if (tempPlayerEconomy.Dust >= plantCost)
         {
@@ -55,7 +55,7 @@ public class GemPlantSystem : MonoBehaviour
             makeCurrencyErrorText.NewMessage();
         }
     }
-    public void addNewGemPlantSpots()
+    public void AddNewGemPlantSpots()
     {
         //Kald denne metode hvis nye gemplant spots bliver tilføjet under spillet
 

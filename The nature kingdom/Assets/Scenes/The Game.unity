@@ -730,7 +730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &212182302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -919,7 +919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &312857231
 Transform:
   m_ObjectHideFlags: 0
@@ -933,7 +933,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1155159287}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &318274324
 GameObject:
@@ -1535,7 +1535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &520809402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2819,7 +2819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &915310591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3633,8 +3633,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 312857231}
   - {fileID: 1615239310}
+  - {fileID: 312857231}
   - {fileID: 312823806}
   - {fileID: 466842234}
   m_Father: {fileID: 0}
@@ -4761,7 +4761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1553351670
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5074,7 +5074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1615239309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5100,7 +5100,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1155159287}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645914586
 GameObject:
@@ -5615,7 +5615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e48b3f7cb5267f4b8d002a7078a11eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectTemplate: {fileID: 520809401}
+  ObjectTemplate: {fileID: 4246704833031001433, guid: 0591317237b073a44aeb8ee3d79a1c03, type: 3}
+  notEnoughCurrency: {fileID: 4891129526179146911, guid: 0591317237b073a44aeb8ee3d79a1c03, type: 3}
   messagePos: {x: 0, y: 0, z: 0}
   addonText: 
 --- !u!223 &1727407637
@@ -6427,7 +6428,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 682586644}
         m_TargetAssemblyTypeName: GemPlantSystem, Assembly-CSharp
-        m_MethodName: buyGemPlant
+        m_MethodName: BuyGemPlant
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

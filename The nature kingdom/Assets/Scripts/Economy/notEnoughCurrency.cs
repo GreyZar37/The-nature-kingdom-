@@ -31,12 +31,11 @@ public class NotEnoughCurrency : MonoBehaviour
     {
         //skal vente på næste update()
         yield return null;
+
         //gør teksten synlig
-        notEnoughTxt = this.GetComponent<TextMeshProUGUI>();
         notEnoughTxt.enabled = true;
 
         rect.localPosition = thisCoolPos;
-
         notEnoughTxt.text = ErrorTextBase + ErrorTextAddon;
 
         //rykker teksten op ad y-aksen med 7f hvert timer sekund
