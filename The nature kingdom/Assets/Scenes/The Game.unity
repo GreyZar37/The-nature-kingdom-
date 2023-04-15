@@ -2350,7 +2350,7 @@ GameObject:
   - component: {fileID: 682586643}
   - component: {fileID: 682586644}
   m_Layer: 0
-  m_Name: GemSpots
+  m_Name: GemPlantSpots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
